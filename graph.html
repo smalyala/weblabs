@@ -2,9 +2,27 @@
 <html>
 	<head>
 	<title>CS Graph</title>
-	</head>
-	
-	<body>
 
+	<style>
+
+		#myCanvas {
+			margin-left: 30%;
+			margin-top: 10%;
+		}
+
+	</style>
+
+	</head>
+
+	<body>
+		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
+
+	<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.fillStyle = "#FF0000";
+		ctx.fillRect(0,0,150,75);
+	</script>
+	
 	</body>
 </html>
