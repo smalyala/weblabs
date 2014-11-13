@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Listbox
+	</title>
+
+<script>
+function prop() {
+	var list2 = document.getElementById("listC");
+    var i;
+	for (i=list2.options.length-1; i>=0; i--) {
+	    list2.remove(i);
+	}
+	var list = document.getElementById("listB");
+	var n1 = document.getElementById("n1");
+	var n2 = document.getElementById("n2");
+	var n3 = document.getElementById("n3");
+	var n4 = document.getElementById("n4");
+	var n5 = document.getElementById("n5");
+	var p1 = {Age: 51, Profession: "Basketball", Worth: "$1 billion", Residency: "Jupiter, Florida", Owner: "Bobcats", Car: "Mercedes"};
+	var p2 = {Worth: "$3 billion", Age: 60, Profession: "Talk show host", Residence: "Montecito, California"};
+	var p3 = {Founded: 1607, Representatives: 13, Motto: "Sic semper tyrannis"};
+	var p4 = {Color: "Grey", Location: "Mount Rushmore", Volume: "10cm&#B3;", Texture: "smooth"};
+	var p5 = {Purpose: "to house families", Material: "wood", Garages: 3, Price: "$10,000,000", Location: "Alaska"};
+	var selec = list.options[list.selectedIndex].value;
+	var opt = document.createElement("option");
+	console.log(selec);
+	var temp;
+	if (selec == n1.value) {
+		temp = p1;
+	}
+	else if (selec == n2.value) {
+		temp = p2;
+	}
+	else if (selec == n3.value) {
+		temp = p3;
+	}
+	else if (selec == n4.value) {
+		temp = p4;
+	}
+	else if (selec == n5.value) {
+		temp = p5;
+	}
+	var s = "";
+	for (val in temp) {
+		var opt = document.createElement("option");
+		opt.text = val + ": " + temp[val];
+		document.getElementById("listC").add(opt);
+	}
+
+};
+
+function showList() {
+	document.getElementById("listB").size="5";
+	document.getElementById("listB").style.display="inline";
+};
+
+function showDrop() {
+	document.getElementById("listB").size="0";
+	document.getElementById("listB").style.display="inline";
+};
+
+</script>
+
+	<style>
+
+		body
+		{
+			min-height: 100%;
+			background-color: #00aff0;
+		}
+
+		#boi {
+			margin-top: 60px;
+			margin-right: 120px;
+			margin-left: 120px;
+			margin-bottom: 0px;
+			background-color: #ffbb00;
+		}
+
+		#inside {
+			margin-left: 160px;
+			margin-top: 0px;
+		}
+
+
+		#listC {
+			width: 600px;
+			margin-left: 20px;
+			height: 88px;
+		}
+
+		#head {
+			padding-top: 100px;
+			padding-left: 90px;
+			color: white;
+			font-family: Arial;
+			text-align: center;
+		}
+
+		#listB {
+			vertical-align: top;
+		}
+
+
+	</style>
+</head>
+
+<body>	
+
+	<h3 id="head">Characteristics</h3>
+	<div id="boi">
+		<br>
+		<br>
+		<br>
+		<form>
+		<input name="val" type="radio" value="box" onchange="showList()">ListBox
+		<input name="val" type="radio" value="down" onchange="showDrop()">Dropdown
+		</form>
+		<br>
+		<br>
+		<br>
+		<span id="inside">
+			<select size="5" id="listB" onchange="prop()" style="display:none">
+				<option id="n1" value="mich">Michael Jordan
+				<option id="n2" value="opra">Oprah Winfrey
+				<option id="n3" value="pric">Virginia
+				<option id="n4" value="rock">Rock
+				<option id="n5" value="hous">House
+			</select>
+
+			<select size="4" id="listC" name="listC">
+			</select>
+		</span>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	</div>
+
+</body>
+
+</html>
