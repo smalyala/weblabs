@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>5 minutes for 50 states</title>
+<style>
+#st {
+    background-color: #FF998F;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:6px;
+    color: #fff;
+    font-family: 'Oswald';
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    border:none;
+    margin-top: 25px;
+}
+
+#st:hover {
+    border: none;
+    color: black;
+    box-shadow: 0px 0px 1px #777;
+}
+
+body {
+	color: #1B4027;
+	font-family: Rockwell;
+	background: #C2C2D6;
+	text-align: center;
+}
+
+#parent {
+	margin-top: 40px;
+	font-size: 50px;
+}
+
+#rest {
+	margin-top: 100px;
+}
+
+#instructions{
+	font-size: 40px;
+	margin-top: 60px;
+}
+
+#stat {
+	margin-top: 30px;
+	font-size: 40px;
+	color: #990000;
+}
+
+.bor {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #3366FF;
+	border-left: 4px solid #3366FF;
+	font-size: 35px;
+}
+
+tr {
+    text-align: left;
+}
+
+font.finish {
+	margin-top: 500px;
+	margin-left: 500px;
+}
+
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type='text/javascript'>
+
+	function findSize(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+
+	function loadPage() {
+		$("#instructions").html("5:00");
+		document.getElementById("myTextId").disabled = true;
+		$("#countLeft").html("Remaining: " + count);
+		minutes=5; 
+		seconds=1; 
+	}
+
+	keys = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+	
+	states = {};
+	states['Alabama'] = 'Montgomery';
+	states['Alaska'] = 'Juneau';
+	states['Arizona'] = 'Phoenix';
+	states['Arkansas'] = 'Little Rock';
+	states['California'] = 'Sacramento';
+	states['Colorado'] = 'Denver';
+	states['Connecticut'] = 'Hartford';
+	states['Delaware'] = 'Dover';
+	states['Florida'] = 'Tallahassee';
+	states['Georgia'] = 'Atlanta';
+	states['Hawaii'] = 'Honolulu';
+	states['Idaho'] = 'Boise';
+	states['Illinois'] = 'Springfield';
+	states['Indiana'] = 'Indianapolis';
+	states['Iowa'] = 'Des Moines';
+	states['Kansas'] = 'Topeka';
+	states['Kentucky'] = 'Frankfort';
+	states['Louisiana'] = 'Baton Rouge';
+	states['Maine'] = 'Augusta';
+	states['Maryland'] = 'Annapolis';
+	states['Massachusetts'] = 'Boston';
+	states['Michigan'] = 'Lansing';
+	states['Minnesota'] = 'St Paul';
+	states['Mississippi'] = 'Jackson';
+	states['Missouri'] = 'Jefferson City';
+	states['Montana'] = 'Helena';
+	states['Nebraska'] = 'Lincoln';
+	states['Nevada'] = 'Carson City';
+	states['New Hampshire'] = 'Concord';
+	states['New Jersey'] = 'Trenton';
+	states['New York'] = 'Albany';
+	states['New Mexico'] = 'Santa Fe';
+	states['North Carolina'] = 'Raleigh';
+	states['North Dakota'] = 'Bismarck';
+	states['Ohio'] = 'Columbus';
+	states['Oklahoma'] = 'Oklahoma City';
+	states['Oregon'] = 'Salem';
+	states['Pennsylvania'] = 'Harrisburg';
+	states['Rhode Island'] = 'Providence';
+	states['South Carolina'] = 'Columbia';
+	states['South Dakota'] = 'Pierre';
+	states['Tennessee'] = 'Nashville';
+	states['Texas'] = 'Austin';
+	states['Utah'] = 'Salt Lake City';
+	states['Vermont'] = 'Montpelier';
+	states['Virginia'] = 'Richmond';
+	states['Washington'] = 'Olympia';
+	states['West Virginia'] = 'Charleston';
+	states['Wisconsin'] = 'Madison';
+	states['Wyoming'] = 'Cheyenne';
+
+	count = findSize(states);
+	fin = "";
+	key = Math.floor(Math.random() * keys.length);
+	st = keys[key];
+
+	function clicked() {
+		$("#parent").html(st);
+		elem = upper(document.getElementById("myTextId").value.trim());
+		if (elem == 'SAINT PAUL' || elem == 'ST. PAUL') {
+			elem = 'ST PAUL'
+		}
+		var ind = -1;
+		pos = -1;
+		for (var i = 0; i < count; i++){
+			if (elem == upper(states[keys[i]])) {
+				pos = i;
+				ind = keys[i];
+				break;
+			}
+		}
+		console.log(ind);
+		if (ind != -1) {		
+			var table = document.getElementById("tab1");
+			console.log('here');
+			table.deleteRow(0);
+			var row = table.insertRow(0);
+			fin += ind + "- " + states[ind] + "; ";
+			var cell1 = row.insertCell(0);
+			cell1.innerHTML = fin;
+			delete states[ind];
+			count--;
+			document.getElementById('myTextId').value = "";
+			keys.splice(key, 1);
+			key = Math.floor(Math.random() * keys.length);
+			st = keys[key];
+			$("#parent").html(st);
+		}
+		$("#countLeft").html("Remaining: " + count);
+		if (findSize(states) == 0) {
+			winner();
+		}
+	}
+
+	function upper(string)
+	{
+	    return string.toUpperCase();
+	}
+
+	function winner() {
+		$('#big').html('<br><img src="usmap.png" height=300px width = 500px><br><button type="button" onclick="reset()" accesskey="t"><u>T</u>ry again!</button>')
+		$('#stat').html('<h1>You WIN!!</h1>');
+	}
+
+	function loser() {
+		$('#big').html('<br><img src="usmap.png" height=300px width = 500px><br><button type="button" onclick="reset()" accesskey="t"><u>T</u>ry again!</button>')
+		$('#stat').html('<h1>You lose</h1>');
+		var rem = "YOU MISSED: ".fontcolor("blue");
+		for (var i = 0; i < keys.length; i++){
+			var stateN = keys[i];
+			var capN = states[stateN];
+			rem += stateN + "- " + capN + "; "
+		}
+		var table = document.getElementById("tab1");
+		var row = table.insertRow(1);
+		var cell1 = row.insertCell(0);
+		cell1.innerHTML = rem;
+	}
+
+	function reset() {
+
+		location.reload();
+	}
+
+
+	function display(){ 
+		$('#st').attr('disabled', 'disabled');
+		document.getElementById("myTextId").disabled = false;
+		document.getElementById('myTextId').focus();
+		clicked();
+		if (minutes == 0 && seconds == 00){ 
+			loser();
+		} 
+
+		if (seconds == 0){ 
+			seconds=60
+			minutes-=1 
+		} 
+
+		if (seconds <= 10) {
+			seconds-=1
+			$("#instructions").html(minutes+":0"+seconds);
+			setTimeout("display()",1000) 
+		}
+
+		else {
+			seconds-=1 
+			$("#instructions").html(minutes+":"+seconds);
+			setTimeout("display()",1000) 
+		}
+	} 
+
+</script>
+</head>
+
+<body onload="loadPage()">
+
+<div id="stat">
+Try to name the capitals of each state!
+</div>
+
+<div id="big">
+<div id="instructions">
+</div>
+
+<div id="parent">
+</div>
+
+<div id="rest">
+<div id="countLeft">
+</div>
+
+<div id="enter">
+<input type="text" id="myTextId" onkeyup="clicked()" oninput="clicked()" class="bor">
+</div>
+
+<button type="button" onclick="display()" id="st" accesskey="s"><u>S</u>tart Timer!</button>
+<br>
+<br>
+<br>
+<br>
+
+</div>
+</div>
+<table id="tab1" align="left">
+	<tr></tr>
+	<tr></tr>
+	<tr></tr>
+</table>
+</body>
+</html>
