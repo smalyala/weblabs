@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>5 minutes for 50 states</title>
+<style>
+#st {
+    background-color: blue;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:6px;
+    color: #fff;
+    font-family: 'Oswald';
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    border:none;
+    margin-top: 25px;
+}
+
+#st:hover {
+    border: none;
+    color: black;
+    box-shadow: 0px 0px 1px #777;
+}
+
+body {
+	color: #1B4027;
+	font-family: Rockwell;
+	background: #C2C2D6;
+	text-align: center;
+}
+
+#rest {
+	margin-top: 30px;
+}
+
+#instructions{
+	font-size: 40px;
+	margin-top: 90px;
+}
+
+#stat {
+	margin-top: 60px;
+	font-size: 40px;
+	color: #990000;
+}
+
+.bor {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #3366FF;
+	border-left: 4px solid #3366FF;
+	font-size: 35px;
+}
+
+tr {
+    text-align: left;
+}
+
+font.finish {
+	margin-top: 500px;
+	margin-left: 500px;
+}
+
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type='text/javascript'>
+
+	function loadPage() {
+		$("#instructions").html("5:00");
+		document.getElementById("myTextId").disabled = true;
+		$("#countLeft").html("Remaining: " + count);
+		minutes=5; 
+		seconds=1; 
+	}
+	
+	states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+	ab = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+	count = states.length;
+	fin = "";
+
+	function clicked() {
+		elem = document.getElementById("myTextId").value;
+		var ind = -1;
+		if (elem.length == 2) {
+			for (var i = 0; i < ab.length; i++){
+				if (elem == ab[i]) {
+					ind = i;
+					break;
+				}
+			}
+		}
+		else {
+			elem = lower(elem);
+			var ind = -1;
+			for (var i = 0; i < states.length; i++){
+				if (elem == lower(states[i])) {
+					ind = i;
+					break;
+				}
+			}
+		}
+		console.log(ind);
+		if (ind != -1) {		
+			var table = document.getElementById("tab1");
+			console.log('here');
+
+			if (count > 32) {
+				table.deleteRow(0);
+				var row = table.insertRow(0);
+			}
+			else if (count > 17) {
+				table.deleteRow(1);
+				var row = table.insertRow(1);
+			}
+			else {
+				table.deleteRow(2);
+				var row = table.insertRow(2);
+			}			
+			if (count == 32 || count == 17) {
+				fin = "";
+			}
+			fin += states[ind] + " ";
+			var cell1 = row.insertCell(0);
+			cell1.innerHTML = fin;
+			states.splice(ind, 1);
+			ab.splice(ind, 1)
+			count--;
+			document.getElementById('myTextId').value = "";
+		}
+		$("#countLeft").html("Remaining: " + count);
+		if (states.length == 0) {
+			winner();
+		}
+	}
+
+	function lower(string)
+	{
+	    return string.toLowerCase();
+	}
+
+	function winner() {
+		document.write('<body bgcolor="#C2C2D6"></body>')
+		document.writeln('<font size="180" color="green" class="finish">WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! WINNER!! </font>');
+		document.writeln('<button type="button" onclick="reset()" accesskey="t"><u>T</u>ry again!</button>');
+
+	}
+
+	function loser() {
+		document.write('<body bgcolor="#C2C2D6"></body>')
+		document.writeln('<font size="80" color="red" class="finish">Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser Loser </font>');
+		document.writeln('<button type="button" onclick="reset()" accesskey="t"><u>T</u>ry again!</button>');
+	}
+
+	function reset() {
+
+		location.reload();
+	}
+
+
+	function display(){ 
+		$('#st').attr('disabled', 'disabled');
+		document.getElementById("myTextId").disabled = false;
+		document.getElementById('myTextId').focus();
+		if (minutes == 0 && seconds == 00){ 
+			loser();
+		} 
+
+		if (seconds == 0){ 
+			seconds=60
+			minutes-=1 
+		} 
+
+		if (seconds <= 10) {
+			seconds-=1
+			$("#instructions").html(minutes+":0"+seconds);
+			setTimeout("display()",1000) 
+		}
+
+		else {
+			seconds-=1 
+			$("#instructions").html(minutes+":"+seconds);
+			setTimeout("display()",1000) 
+		}
+	} 
+
+</script>
+
+</head>
+
+<body onload="loadPage()">
+
+<div id="stat">
+Try to name all 50 states under five minutes!
+</div>
+
+<div id="instructions">
+</div>
+
+<div id="rest">
+<div id="countLeft">
+</div>
+
+<div id="enter">
+<input type="text" id="myTextId" onkeyup="clicked()" oninput="clicked()" class="bor">
+</div>
+
+<button type="button" onclick="display()" id="st" accesskey="s"><u>S</u>tart timer!</button>
+<br>
+<br>
+<br>
+<br>
+<table id="tab1" align="left">
+<tr></tr>
+<tr></tr>
+<tr></tr>
+</table>
+
+</div>
+
+</body>
+</html>
