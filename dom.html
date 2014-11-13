@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>5 minutes for 50 states</title>
+<style>
+#st {
+    background-color: #C2C2D6;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:6px;
+}
+
+body {
+	color: #1B4027;
+	font-family: Rockwell;
+	background: #C2C2D6;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+#rest {
+	margin-top: 20px;
+}
+
+#instructions{
+	font-size: 40px;
+	margin-top: 60px;
+}
+
+#stat {
+	margin-top: 30px;
+	font-size: 40px;
+	color: #990000;
+}
+
+.bor {
+	width: 300px;
+	height: 40px;
+	border: 1px solid #3366FF;
+	border-left: 4px solid #3366FF;
+	font-size: 35px;
+}
+
+tr {
+    text-align: left;
+}
+
+font.finish {
+	margin-top: 500px;
+	margin-left: 500px;
+}
+
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type='text/javascript'>
+
+	function bodyClicked(event){
+	    var x = event.clientX;
+	    var y = event.clientY;
+	    goObj(x, y)
+	}
+
+	function goObj(x, y) {
+		var arr = document.getElementsByTagName("*");
+		var numNodes = arr.length;
+		var tot = [];
+		for (var i = 0; i < numNodes; i++) {
+			var elem = arr[i];
+			var area = elem.offsetHeight * elem.offsetWidth;
+			tot.push([area, elem]);
+		}
+		tot.sort();
+		var best;
+		once = false;
+		for (var i = 0; i < numNodes; i++) {
+			over = tot[i];
+			elem = over[1];
+			area = over[0];
+			r = elem.getBoundingClientRect()
+			l = r.left;
+			t = r.top;
+			r = l + elem.offsetWidth;
+			b = t + elem.offsetHeight;
+			if (((l < x ) && (x < r) && (t < y) && (y < b)) && (once == false)) {
+				best = over;
+				once = true;
+			}
+			else if (((l < x ) && (x < r) && (t < y) && (y < b)) && (area < best[0])) {
+				best = over;
+			}
+		}
+		ob = best[1]
+		function objProps(myObj) {
+			var idx, out = "";
+			for (idx in myObj) {
+				var tn = typeof(myObj[idx]);
+				if (tn=="function") continue; 
+				if (!myObj[idx]) continue;
+				out += (!out ? "" : ",\n");
+				out += idx + ": " + myObj[idx];
+			}
+			return out;
+		}
+		console.log(objProps(ob));
+	}
+
+
+</script>
+
+</head>
+
+<body onclick="bodyClicked(event)">
+
+<div id="stat">
+Try to name all 50 states under five minutes!
+</div>
+
+<div id="instructions">
+</div>
+
+<div id="rest">
+<div id="countLeft">
+</div>
+
+<div id="enter">
+<input type="text" id="myTextId"class="bor">
+</div>
+
+<table id="tab1" align="left">
+	<tr>
+		<td>
+			<a>link</a>
+		</td>
+	</tr>
+	<tr>
+		<td>HI</td>
+	</tr>
+	<tr>
+		<td>BYE</td>
+	</tr>
+</table>
+
+<button type="button" id="st">button</button>
+<br>
+<br>
+<br>
+<br>
+
+</div>
+
+</body>
+</html>
