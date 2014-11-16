@@ -18,10 +18,18 @@
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 
 	<script>
-		var c = document.getElementById("myCanvas");
-		var ctx = c.getContext("2d");
-		ctx.fillStyle = "#FF0000";
-		ctx.fillRect(0,0,150,75);
+		function draw(canvas, evt) {
+			var x = event.clientX - canvas.getBoundingClientRect().left;
+	    	var y = event.clientY - canvas.getBoundingClientRect().top;
+		  	if (canvas.getContext) {
+		    	var ctx = canvas.getContext('2d');
+		    	ctx.fillRect(x,y,3,3);
+		  	}
+		}
+		var canvas = document.getElementById('myCanvas');
+		canvas.addEventListener('click', function(evt) {
+			draw(canvas, evt)
+		}, false);
 	</script>
 	
 	</body>
