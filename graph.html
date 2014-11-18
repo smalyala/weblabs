@@ -4,32 +4,63 @@
 	<title>CS Graph</title>
 
 	<style>
-
 		#myCanvas {
 			margin-left: 30%;
 			margin-top: 10%;
 		}
-
 	</style>
 
 	</head>
 
 	<body>
+		<button onclick='chPath()'>New Path</button>
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 
 	<script>
+		pts = [[0, 0]];
+		skip = false;
 		function draw(canvas, evt) {
 			var x = event.clientX - canvas.getBoundingClientRect().left;
 	    	var y = event.clientY - canvas.getBoundingClientRect().top;
-		  	if (canvas.getContext) {
-		    	var ctx = canvas.getContext('2d');
-		    	ctx.fillRect(x,y,3,3);
+    		if (skip) {
+    			if (canvas.getContext) {
+		    		pts.push([x, y]);
+		    		skip = false;
+		    		var ctx = canvas.getContext('2d');
+	    			ctx.beginPath();
+			    	ctx.arc(x,y,7,0,2*Math.PI);
+		    		console.log(pts[pts.length-1]);
+			    	ctx.fillStyle = 'black';
+			    	ctx.fill();
+			    	ctx.stroke();
+		    	}
+	    	}
+	    	else {
+			  	if (canvas.getContext) {
+			    	var ctx = canvas.getContext('2d');
+			    	ctx.beginPath();
+			    	ctx.arc(x,y,7,0,2*Math.PI);
+			    	if (pts.length > 1) {
+				    	var prev = pts[pts.length-1];
+				    	ctx.moveTo(prev[0], prev[1]);
+				    	ctx.lineTo(x, y);
+			    	}
+			    	pts.push([x, y]);
+			    	console.log(pts[pts.length-1]);
+			    	ctx.fillStyle = 'black';
+			    	ctx.fill();
+			    	ctx.stroke();
+			  	}
 		  	}
 		}
 		var canvas = document.getElementById('myCanvas');
 		canvas.addEventListener('click', function(evt) {
 			draw(canvas, evt)
-		}, false);
+		}, true);
+
+		function chPath() {
+			skip = true;
+		}
 	</script>
 	
 	</body>
