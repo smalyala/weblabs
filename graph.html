@@ -14,37 +14,40 @@
 
 	<body>
 		<button onclick='chPath()'>New Path</button>
-		<button onclick='chPath()'>Toggle edges</button>
+		<button onclick='init()'>Toggle edges</button>
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 
 	<script>
 		pts = [[0, 0]];
 		skip = false;
 		function draw(canvas, evt) {
+			ctx = canvas.getContext('2d');
 			var x = event.clientX - canvas.getBoundingClientRect().left;
 	    	var y = event.clientY - canvas.getBoundingClientRect().top;
     		if (skip) {
     			if (canvas.getContext) {
 		    		pts.push([x, y]);
 		    		skip = false;
-		    		var ctx = canvas.getContext('2d');
 	    			ctx.beginPath();
 			    	ctx.arc(x,y,7,0,2*Math.PI);
 		    		console.log(pts[pts.length-1]);
 			    	ctx.fillStyle = 'black';
 			    	ctx.fill();
+			    	var arr = ['#ffd700', '#e066ff', '#082581', '#4a968b', '#ffa500', '#ff0000', '#00ffff', '#00ff00'];
+			    	var rand = arr[Math.floor(Math.random() * arr.length)];
+			    	ctx.strokeStyle = rand;
 			    	ctx.stroke();
 		    	}
 	    	}
 	    	else {
 			  	if (canvas.getContext) {
-			    	var ctx = canvas.getContext('2d');
 			    	ctx.beginPath();
 			    	ctx.arc(x,y,7,0,2*Math.PI);
 			    	if (pts.length > 1) {
 				    	var prev = pts[pts.length-1];
 				    	ctx.moveTo(prev[0], prev[1]);
 				    	ctx.lineTo(x, y);
+				    	ctx.lineWidth = 3;
 			    	}
 			    	pts.push([x, y]);
 			    	console.log(pts[pts.length-1]);
@@ -55,13 +58,46 @@
 		  	}
 		}
 		var canvas = document.getElementById('myCanvas');
-		canvas.addEventListener('click', function(evt) {
-			draw(canvas, evt)
-		}, true);
+	    ctx = canvas.getContext('2d'),
+	    rect = {},
+	    drag = false;
+	    if (!drag) {
+	    	canvas.addEventListener('click', function(evt) {
+				draw(canvas, evt)
+			}, true);
+	    }
 
-		canvas.addEventListener('mousedown', function(evt) {
-			other(canvas, evt)
-		}, true);
+		function init() {
+			canvas.addEventListener('mousedown', mouseDown, false);
+			canvas.addEventListener('mouseup', mouseUp, false);
+			canvas.addEventListener('mousemove', mouseMove, false);
+		}
+
+		function mouseDown(e) {
+			rect.startX = e.pageX - this.offsetLeft;
+			rect.startY = e.pageY - this.offsetTop;
+			drag = true;
+		}
+
+		function mouseUp() {
+			drag = false;
+			canvas.width = canvas.width;
+
+		}
+
+		function mouseMove(e) {
+			if (drag) {
+				rect.w = (e.pageX - this.offsetLeft) - rect.startX;
+				rect.h = (e.pageY - this.offsetTop) - rect.startY ;
+				//ctx.clearRect(0,0,canvas.width,canvas.height);
+				canvas.width = canvas.width;
+				drawRec();
+			}
+		}
+
+		function drawRec() {
+			ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+		}
 
 		function chPath() {
 			skip = true;
