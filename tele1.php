@@ -24,7 +24,7 @@
 		function solve($datum,$i,$n) {
 		   if ($i == $n) {
 		   		global $arr;
-		   		if (in_array($datum, $arr)) {
+		   		if (!in_array($datum, $arr)) {
 		    		array_push($arr, $datum);
 		    	}
 		    }
@@ -39,7 +39,11 @@
 		$datum = $_REQUEST['myStr'];
 		$arr = [];
 		solve($datum, 0,strlen($datum)); // call the function.
-		echo '<pre>'; print_r($arr); echo '</pre>';
+		echo 'Permutations: '. count($arr);
+		echo '<pre>'; 
+		print_r($arr); 
+		echo '</pre>';
+
 	 	
 	?> 
 	</body>
