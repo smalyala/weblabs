@@ -22,8 +22,12 @@
 
  		// function to generate and print all N! permutations of $str. (N = strlen($str)).
 		function solve($datum,$i,$n) {
-		   if ($i == $n)
-		       echo "$datum\n";
+		   if ($i == $n) {
+		   		global $arr;
+		   		if (in_array($datum, $arr)) {
+		    		array_push($arr, $datum);
+		    	}
+		    }
 		   else {
 		        for ($j = $i; $j < $n; $j++) {
 		          swap($datum,$i,$j);
@@ -33,7 +37,9 @@
 		   }
 		}
 		$datum = $_REQUEST['myStr'];
+		$arr = [];
 		solve($datum, 0,strlen($datum)); // call the function.
+		echo '<pre>'; print_r($arr); echo '</pre>';
 	 	
 	?> 
 	</body>
