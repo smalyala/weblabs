@@ -28,8 +28,6 @@
 		$arr = [];
 		solve($datum, 0,strlen($datum)); // call the function.
 		echo 'Permutations: '. count($arr);
-		echo '<pre>'; 
 		print_r($arr); 
-		echo '</pre>';
 	}
 ?> 
