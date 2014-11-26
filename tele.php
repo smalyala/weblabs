@@ -6,7 +6,7 @@
   	<title>Telelearn assignment</title>
 </head>
  	<body>
- 	<form name="f" method="GET" action="tele1.php">
+ 	<form name="f" method="GET" action="tele.php">
  		Type string to permute:
  		<input type="text" name="myStr">
  			<button type="submit" accesskey="s"><u>S</u>ubmit</button>
