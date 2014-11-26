@@ -1,3 +1,4 @@
+<?php if (!(php_sapi_name() == "cli")) : ?>
 <!DOCTYPE html>
 
 <html>
@@ -11,7 +12,9 @@
  		<input type="text" name="myStr">
  			<button type="submit" accesskey="s"><u>S</u>ubmit</button>
  	</form>
- 	 <?php 
+<?php endif; ?>
+
+ 	<?php 
 
 		function swap(&$datum,$i,$j) {
 		    $temp = $datum[$i];
@@ -52,5 +55,8 @@
 			echo '</pre>';	
 		}
 	?> 
+	
+<?php if (!(php_sapi_name() == "cli")) : ?>
 	</body>
 </html>
+<?php endif; ?>
