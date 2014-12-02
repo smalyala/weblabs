@@ -22,9 +22,14 @@ setInterval(function() {
 
 <?php  
 
-$memcache_obj = memcache_connect('memcache_host', 11211);
-memcache_set($memcache_obj, 'last', $time, 0, 30);
-$time = memcache_get($memcache_obj, 'last');
+$arr = file('visits.txt');
+echo "Last visit at " . end($arr);
+
+$file = 'visits.txt';
+$current = file_get_contents($file);
+$current .= date("g:i:s");
+echo "<br> Current time " . date("g:i:s");
+file_put_contents($file, $current);
 
 $handle = fopen("counter.txt", "r"); 
 if(!$handle) { 
