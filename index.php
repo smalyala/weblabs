@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Previous Visit</title>
+<title>Visitors</title>
 </head>
 <body>
+
+<b>Strange how you found this page. Below are data on this page's last visits.</b>
+<br>
+<br>
 
 <?php  
 
