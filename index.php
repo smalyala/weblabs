@@ -17,8 +17,8 @@ file_put_contents("visits.txt", "");
 
 $file = 'visits.txt';
 $current = file_get_contents($file);
-$current .= date("g:i:s");
-echo "<br> Current time: " . date("g:i:s");
+$current .= date("g:i:s A");
+echo "<br> Current time: " . date("g:i:s A");
 file_put_contents($file, $current);
 
 $handle = fopen("counter.txt", "r"); 
