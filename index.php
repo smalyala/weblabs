@@ -26,12 +26,13 @@ if(!$handle) {
 	echo "could not open the file"; 
 } 
 else { 
-	$counter = (int ) fread($handle,20); 
-	fclose ($handle); $counter++; 
-	echo" <br> You are the ". $counter . "th visitor" ; 
+	$counter = (int)fread($handle,20); 
+	fclose($handle); 
+	$counter++; 
+	echo "<br> You are the ". $counter . "th visitor"; 
 	$handle = fopen("counter.txt", "w" ); 
-	fwrite($handle,$counter) ; 
-	fclose ($handle) ;
+	fwrite($handle,$counter); 
+	fclose($handle);
 }
 
 ?>
