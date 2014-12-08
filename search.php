@@ -14,10 +14,12 @@
 	if (isset($_POST["search"])) {
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
-		echo $url;
 		$html = file_get_html($url);
-		foreach($html->find('div') as $element) {
-       		echo $element . '<br>';
+		for ($i = 0; $i < 15; $i++) {
+			foreach($html->find('li[id=result_'.$i.']') as $element) {
+	       		echo $element . '<br>';
+			}
+			echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 		}
 	}
 	?>
