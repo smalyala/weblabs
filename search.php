@@ -11,6 +11,25 @@
 
 	<?php
 	include('simple_html_dom.php');
+	function get_html_content($url) {
+	    // fake user agent
+	    $userAgent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2';
+
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    //curl_setopt($ch, CURLOPT_HEADER, 1);
+	    curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
+	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	    //curl_setopt($ch,CURLOPT_COOKIEFILE,'cookies.txt');
+	    //curl_setopt($ch,CURLOPT_COOKIEJAR,'cookies.txt');
+
+	    $string = curl_exec($ch);
+	    curl_close($ch);
+
+	    return $string;
+	}
+
 	if (isset($_POST["search"])) {
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
@@ -23,26 +42,8 @@
        		echo $id;
        	}
    	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
-   		$html2 = file_get_html($url2);
+   		$html2 = get_html_content($url2);
    		echo $html2;
-
-		// $j = 0;
-		// $arr = [];
-		// $tbl = "<table>";
-		// for ($i = 0; $i < 14; $i++) {
-		// 	if (($j-1) % 3 == 0) {
-		// 		$arr = [];
-		// 	}
-		// 	foreach($html->find('li[id=result_'.$i.']') as $element) {
-	 //       		array_push($arr, $element);
-		// 	}
-		// 	if ($j % 3 == 0) {
-		// 		$tbl .= "<tr><td>" . $arr[0] . "</td><td>" . $arr[1] . "</td><td>" . $arr[2] . "</td></tr>";
-		// 	}
-		// 	$j++;
-		// }
-		// $tbl .= "</table>";
-		// echo $tbl;
 	}
 	?>
 
