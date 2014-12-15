@@ -43,8 +43,24 @@
        	}
    	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
    		$html2 = get_html_content($url2);
-   		echo $html2;
+   		$html2 = str_get_html($html2);
+   		//echo $html2;
+   		$count = 0;
+   		$html3 = "";
+   		$tbl = "<table>";
+   		foreach($html2->find('div[class=olpOffer]') as $element) {
+   			if ($count < 10) {
+   				$tbl .= "<tr>";
+   				foreach($element->find('div') as $each) {
+   					$tbl .= "<td>" . $each . "</td>";
+   				}
+   				$tbl .= "</tr>";
+   				$count += 1;
+   			}
+   		}
+   		$tbl .= "</table>";
 	}
+	echo $tbl;
 	?>
 
 </body>
