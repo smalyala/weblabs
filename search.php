@@ -73,8 +73,9 @@ td {
    			}
    		}
    		$tbl .= "</table>";
+   		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
+		echo $tbl;
 	}
-	echo $tbl;
 	?>
 
 </body>
