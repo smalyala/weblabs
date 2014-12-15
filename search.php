@@ -15,7 +15,7 @@ td {
 
 	<form name="f" method="POST" action="search.php">
 	<font color="orange"><b>Search Amazon:</b></font>
-	<input type="text" name="search">
+	<input type="text" id="myTextId" name="search">
 		<button type="submit" accesskey="s"><u>S</u>earch</button>
 	</form>
 
@@ -46,10 +46,16 @@ td {
 		$html = file_get_html($url);
 		foreach($html->find('li[id=result_0]') as $element) {
        		$prod_url = $element->find('a', 0)-> href;
+       		$image = $element->find('img', 0);
+       		$title = $element->find('a', 1);
        		$id = explode("dp/", $prod_url);
        		$id = explode("/", $id[1]);
        		$id = $id[0];
        	}
+       	echo "<center><h2><b>Product</b></h2></center>";
+       	echo "<center>".$image."</center>";
+       	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
+       	echo "<center><h4>".$title."</h4></center>";
    	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
@@ -75,6 +81,10 @@ td {
 		echo $tbl;
 	}
 	?>
+
+	<script>
+		document.getElementById('myTextId').focus();
+	</script>
 
 </body>
 
