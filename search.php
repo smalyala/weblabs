@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Amazon Search</title>
 <style>
 
 td {
@@ -13,7 +14,7 @@ td {
 <body>
 
 	<form name="f" method="POST" action="search.php">
-	Search Amazon:
+	<font color="orange"><b>Search Amazon:</b></font>
 	<input type="text" name="search">
 		<button type="submit" accesskey="s"><u>S</u>earch</button>
 	</form>
@@ -48,24 +49,21 @@ td {
        		$id = explode("dp/", $prod_url);
        		$id = explode("/", $id[1]);
        		$id = $id[0];
-       		echo $id;
        	}
    	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
-   		//echo $html2;
    		$count = 0;
-   		$html3 = "";
    		$tbl = "<table border='1'><tr><td><b><h2><center>Price</center></h2></b></td><td><b><h2><center>Condition</center></h2></b></td>
    		<td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td>";
    		foreach($html2->find('div[class=olpOffer]') as $element) {
    			if ($count < 10) {
    				$tbl .= "<tr>";
-   				$count = 0;
+   				$count2 = 0;
    				foreach($element->find('div[class=a-column]') as $each) {
-   					if ($count < 4) {
+   					if ($count2 < 4) {
    						$tbl .= "<td><center>" . $each . "</center></td>";
-   						$count += 1;
+   						$count2 += 1;
    					}
    				}
    				$tbl .= "</tr>";
