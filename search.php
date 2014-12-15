@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+
+td {
+	width: 25%;
+}
+
+</style>
+</head>
 
 <body>
 
@@ -41,18 +50,23 @@
        		$id = $id[0];
        		echo $id;
        	}
-   	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
+   	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
    		//echo $html2;
    		$count = 0;
    		$html3 = "";
-   		$tbl = "<table>";
+   		$tbl = "<table border='1'><tr><td><b><h2><center>Price</center></h2></b></td><td><b><h2><center>Condition</center></h2></b></td>
+   		<td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td>";
    		foreach($html2->find('div[class=olpOffer]') as $element) {
    			if ($count < 10) {
    				$tbl .= "<tr>";
-   				foreach($element->find('div') as $each) {
-   					$tbl .= "<td>" . $each . "</td>";
+   				$count = 0;
+   				foreach($element->find('div[class=a-column]') as $each) {
+   					if ($count < 4) {
+   						$tbl .= "<td><center>" . $each . "</center></td>";
+   						$count += 1;
+   					}
    				}
    				$tbl .= "</tr>";
    				$count += 1;
