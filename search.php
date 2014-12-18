@@ -56,8 +56,8 @@ td {
        	echo "<center>".$image."</center>";
        	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
        	echo "<center><h4>".$title."</h4></center>";
-   	    //$url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
-   	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
+   	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
+   	    //$url2 = "http://www.amazon.com/gp/offer-listing/".$id;
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
    		$count = 0;
