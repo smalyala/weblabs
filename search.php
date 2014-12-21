@@ -74,7 +74,11 @@ td {
    							foreach($each->find('h3[class=olpCondition]') as $texts) {
 	   							$comp .= $texts;
 	   						}
-   							//$each = preg_replace('|<img.*>|iU', '' , $comp);
+	   						foreach($each->find('div[class=collapsedNote]') as $texts) {
+	   							$comp .= $texts;
+	   						}
+   							$comp = preg_replace('|<img.*>|iU', '' , $comp);
+   							echo $comp;
    						}
    						$tbl .= "<td><center>" . $each . "</center></td>";
    						$count2 += 1;
@@ -84,30 +88,10 @@ td {
    				$count += 1;
    			}
    		}
-   		// foreach($html2->find('div[class=olpOffer]') as $element) {
-   		// 	if ($count < 10) {
-   		// 		$tbl .= "<tr>";
-   		// 		$count2 = 0;
-   		// 		foreach($element->find('div[class=a-column]') as $each) {
-   		// 			if ($count == 1) {
-   		// 				foreach($each->find('div[class=collapsedNote]') as $texts) {
-   		// 					$tbl .= "<td><center>" . $texts . "</center></td>";
-   		// 				}
-   		// 				$count += 1;
-   		// 			}
-   		// 			elseif ($count2 < 4) {
-   		// 				$tbl .= "<td><center>" . $each . "</center></td>";
-   		// 				$count2 += 1;
-   		// 			}
-   		// 		}
-   		// 		$tbl .= "</tr>";
-   		// 		$count += 1;
-   		// 	}
-   		// }
    		$tbl .= "</table>";
-   		//$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
-   		//$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
-		echo $tbl;
+   		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
+   		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
+		//echo $tbl;
 	}
 	?>
 
