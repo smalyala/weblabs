@@ -74,11 +74,7 @@ td {
    							foreach($each->find('h3[class=olpCondition]') as $texts) {
 	   							$comp .= $texts;
 	   						}
-	   						foreach($each->find('div[class=collapsedNote]') as $texts) {
-	   							$comp .= $texts;
-	   						}
-   							$comp = preg_replace('|<img.*>|iU', '' , $comp);
-   							echo $comp;
+   							$each = preg_replace('|<span.*/span>|iU', '' , $comp);
    						}
    						$tbl .= "<td><center>" . $each . "</center></td>";
    						$count2 += 1;
@@ -91,7 +87,8 @@ td {
    		$tbl .= "</table>";
    		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
    		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
-		//echo $tbl;
+   		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
+		echo $tbl;
 	}
 	?>
 
