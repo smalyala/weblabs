@@ -43,6 +43,8 @@ td {
 	if (isset($_POST["search"])) {
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
+    $url = preg_replace("|\s|", "+", $url);
+    echo $url;
 		$html = file_get_html($url);
 		foreach($html->find('li[id=result_0]') as $element) {
        		$prod_url = $element->find('a', 0)-> href;
