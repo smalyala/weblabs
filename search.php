@@ -67,7 +67,7 @@ td {
    		$html2 = str_get_html($html2);
    		$count = 0;
    		$tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-   		<th><b><h2><center>Seller</center></h2></b></th><th><b><h2><center>Logistics</center></h2></b></th></tr></thead><tbody>";
+   		<td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
    		foreach($html2->find('div[class=olpOffer]') as $element) {
    			if ($count < 10) {
    				$tbl .= "<tr>";
