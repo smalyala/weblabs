@@ -10,7 +10,12 @@ td {
 
 </style>
 <script type="text/javascript" src="/path/to/jquery-latest.js"></script> 
-<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script> 
+<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>
+<script>
+  $(document).ready(function(){ 
+    $("#myTable").tablesorter(); 
+  }); 
+</script> 
 </head>
 
 <body>
