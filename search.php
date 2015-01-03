@@ -10,13 +10,9 @@ td {
 
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script src="~/Scripts/jquery.tablesorter.min.js"></script>
-<script type="text/javascript">
-<script>
-  $(document).ready(function(){ 
-    $("#myTable").tablesorter(); 
-  }); 
-</script> 
+<script type="text/javascript" src="jquery-latest.js"></script> 
+<script type="text/javascript" src="jquery.tablesorter.js"></script> 
+
 </head>
 
 <body>
@@ -99,10 +95,13 @@ td {
    		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
 		echo $tbl;
 	}
-	?>
-
+	?> 
 	<script>
 		document.getElementById('myTextId').focus();
+    function sortT() {
+      $("#myTable").tablesorter(); 
+    }
+    sortT();
 	</script>
 
 </body>
