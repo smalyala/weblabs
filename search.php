@@ -9,6 +9,8 @@ td {
 }
 
 </style>
+<script type="text/javascript" src="/path/to/jquery-latest.js"></script> 
+<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script> 
 </head>
 
 <body>
@@ -44,7 +46,6 @@ td {
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
     $url = preg_replace("|\s|", "+", $url);
-    echo $url;
 		$html = file_get_html($url);
 		foreach($html->find('li[id=result_0]') as $element) {
        		$prod_url = $element->find('a', 0)-> href;
@@ -63,8 +64,8 @@ td {
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
    		$count = 0;
-   		$tbl = "<table border='1'><tr><td><b><h2><center>Price</center></h2></b></td><td><b><h2><center>Condition</center></h2></b></td>
-   		<td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td>";
+   		$tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
+   		<th><b><h2><center>Seller</center></h2></b></th><th><b><h2><center>Logistics</center></h2></b></th></tr></thead><tbody>";
    		foreach($html2->find('div[class=olpOffer]') as $element) {
    			if ($count < 10) {
    				$tbl .= "<tr>";
@@ -86,7 +87,7 @@ td {
    				$count += 1;
    			}
    		}
-   		$tbl .= "</table>";
+   		$tbl .= "</tbody></table>";
    		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
    		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
    		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
