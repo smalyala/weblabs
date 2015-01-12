@@ -45,24 +45,32 @@ td {
 	}
 
 	if (isset($_POST["search"])) {
+    class MyDB extends SQLite3
+    {
+        function __construct()
+        {
+            $this->open('amazon.db');
+        }
+    }
+    $db = new MyDB();
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
     $url = preg_replace("|\s|", "+", $url);
 		$html = file_get_html($url);
 		foreach($html->find('li[id=result_0]') as $element) {
-       		$prod_url = $element->find('a', 0)-> href;
-       		$image = $element->find('img', 0);
-       		$title = $element->find('a', 1);
-       		$id = explode("dp/", $prod_url);
-       		$id = explode("/", $id[1]);
-       		$id = $id[0];
-       	}
-       	echo "<center><h2><b>Product</b></h2></center>";
-       	echo "<center>".$image."</center>";
-       	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
-       	echo "<center><h4>".$title."</h4></center>";
-   	    //$url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
-   	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
+     		$prod_url = $element->find('a', 0)-> href;
+     		$image = $element->find('img', 0);
+     		$title = $element->find('a', 1);
+     		$id = explode("dp/", $prod_url);
+     		$id = explode("/", $id[1]);
+     		$id = $id[0];
+     	}
+     	echo "<center><h2><b>Product</b></h2></center>";
+     	echo "<center>".$image."</center>";
+     	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
+     	echo "<center><h4>".$title."</h4></center>";
+ 	    //$url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
+ 	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
    		$count = 0;
@@ -72,6 +80,7 @@ td {
    			if ($count < 10) {
    				$tbl .= "<tr>";
    				$count2 = 0;
+          $arr = [];
    				foreach($element->find('div[class=a-column]') as $each) {
    					if ($count2 < 4) {
    						if ($count2 == 1) {
@@ -81,11 +90,14 @@ td {
 	   						}
    							$each = preg_replace('|<span.*/span>|iU', '' , $comp);
    						}
+              array_push($arr, $each);
    						$tbl .= "<td><center>" . $each . "</center></td>";
    						$count2 += 1;
    					}
    				}
    				$tbl .= "</tr>";
+          $tid = hash('ripemd160', $arr[0]);
+          $db->exec("INSERT INTO amz (id, price, condition, seller, logistics) VALUES (".$tid.",".$arr[0].",".$arr[1].",".$arr[2].",".$arr[3].")");
    				$count += 1;
    			}
    		}
@@ -98,7 +110,7 @@ td {
 	?> 
 	<script>
 		document.getElementById('myTextId').focus();
-    function sortT() {
+	  function sortT() {
       $("#myTable").tablesorter(); 
     }
     sortT();
