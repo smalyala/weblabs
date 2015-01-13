@@ -69,7 +69,6 @@ td {
      	echo "<center>".$image."</center>";
      	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
      	echo "<center><h4>".$title."</h4></center>";
- 	    //$url2 = "http://www.amazon.com/gp/offer-listing/".$id."/ref=olp_tab_new?ie=UTF8&condition=new";
  	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
@@ -91,23 +90,29 @@ td {
    						$count2 += 1;
    					}
    				}
-          $tid = hash('ripemd160', $arr[0]);
-          $db->exec("INSERT INTO amz (id, price, condition, seller, logistics) VALUES (".$tid.",".$arr[0].",".$arr[1].",".$arr[2].",".$arr[3].")");
+          $tid = hash('ripemd160', $arr[0]).rand(2, 100);
+          $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
+          $insert = str_replace('?', '', $insert);
+          print $insert;
+          $db->exec($insert);
    				$count += 1;
    			}
    		}
       $db = new SQLite3('amazon.db');
       $results = $db->query('SELECT * FROM amz');
-      $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-        <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
-      while ($row = $results->fetchArray()) {
-        $tbl .= $row;
-      }
-   		$tbl .= "</tbody></table>";
-   		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
-   		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
-   		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
-		echo $tbl;
+  //     $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
+  //       <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
+  //     while ($row = $results->fetchArray()) {
+  //       $tbl .= $row;
+  //     }
+      // while ($row = $results->fetchArray()) {
+      //   var_dump($row);
+      // }
+  //  		$tbl .= "</tbody></table>";
+  //  		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
+  //  		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
+  //  		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
+		// echo $tbl;
 	}
 	?> 
 	<script>
