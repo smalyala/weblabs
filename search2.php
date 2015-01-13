@@ -17,7 +17,7 @@ td {
 
 <body>
 
-	<form name="f" method="POST" action="search.php">
+	<form name="f" method="POST" action="search2.php">
 	<font color="orange"><b>Search Amazon:</b></font>
 	<input type="text" id="myTextId" name="search">
 		<button type="submit" accesskey="s"><u>S</u>earch</button>
@@ -74,11 +74,8 @@ td {
    		$html2 = get_html_content($url2);
    		$html2 = str_get_html($html2);
    		$count = 0;
-   		$tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-   		<td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
    		foreach($html2->find('div[class=olpOffer]') as $element) {
    			if ($count < 10) {
-   				$tbl .= "<tr>";
    				$count2 = 0;
           $arr = [];
    				foreach($element->find('div[class=a-column]') as $each) {
@@ -91,16 +88,21 @@ td {
    							$each = preg_replace('|<span.*/span>|iU', '' , $comp);
    						}
               array_push($arr, $each);
-   						$tbl .= "<td><center>" . $each . "</center></td>";
    						$count2 += 1;
    					}
    				}
-   				$tbl .= "</tr>";
           $tid = hash('ripemd160', $arr[0]);
           $db->exec("INSERT INTO amz (id, price, condition, seller, logistics) VALUES (".$tid.",".$arr[0].",".$arr[1].",".$arr[2].",".$arr[3].")");
    				$count += 1;
    			}
    		}
+      $db = new SQLite3('amazon.db');
+      $results = $db->query('SELECT * FROM amz');
+      $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
+        <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
+      while ($row = $results->fetchArray()) {
+        $tbl .= $row;
+      }
    		$tbl .= "</tbody></table>";
    		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
    		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
