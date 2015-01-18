@@ -45,6 +45,7 @@ td {
 	}
 
 	if (isset($_POST["search"])) {
+    error_reporting(0);
     $db = new SQLite3('amazon.db');
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
