@@ -45,14 +45,15 @@ td {
 	}
 
 	if (isset($_POST["search"])) {
-    class MyDB extends SQLite3
-    {
-        function __construct()
-        {
-            $this->open('amazon.db');
-        }
+    class sqlite extends SQLiteDatabase {
+      public function escape($data) {
+          if(is_array($data))
+              return array_map("sqlite_escape_string", $data);
+          return sqlite_escape_string($data);
+      }
     }
-    $db = new MyDB();
+
+    $db = new sqlite("amazon.db");
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
     $url = preg_replace("|\s|", "+", $url);
