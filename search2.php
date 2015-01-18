@@ -26,17 +26,13 @@ td {
 	<?php
 	include('simple_html_dom.php');
 	function get_html_content($url) {
-	    // fake user agent
 	    $userAgent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2';
 
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_URL, $url);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    //curl_setopt($ch, CURLOPT_HEADER, 1);
 	    curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
 	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-	    //curl_setopt($ch,CURLOPT_COOKIEFILE,'cookies.txt');
-	    //curl_setopt($ch,CURLOPT_COOKIEJAR,'cookies.txt');
 
 	    $string = curl_exec($ch);
 	    curl_close($ch);
@@ -86,9 +82,6 @@ td {
  				}
         $tid = "c".hash('sha256', $arr[0]).rand(2, 100).rand(101, 1000);
         $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
-        //$insert = str_replace('?', '', $insert);
-        //$insert = str_replace('shippingMessage_ftinfo_olp_.', '', $insert);
-        //print $insert;
         $db->exec($insert);
  				$count += 1;
  			}
