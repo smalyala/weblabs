@@ -45,15 +45,7 @@ td {
 	}
 
 	if (isset($_POST["search"])) {
-    class sqlite extends SQLiteDatabase {
-      public function escape($data) {
-          if(is_array($data))
-              return array_map("sqlite_escape_string", $data);
-          return sqlite_escape_string($data);
-      }
-    }
-
-    $db = new sqlite("amazon.db");
+    $db = new SQLite3('amazon.db');
 		$search = $_POST["search"];
 		$url = "http://www.amazon.com/s/ref=nb_sb_noss_2/182-8477515-7038932?url=search-alias%3Daps&field-keywords=".$search;
     $url = preg_replace("|\s|", "+", $url);
@@ -65,55 +57,54 @@ td {
      		$id = explode("dp/", $prod_url);
      		$id = explode("/", $id[1]);
      		$id = $id[0];
-     	}
-     	echo "<center><h2><b>Product</b></h2></center>";
-     	echo "<center>".$image."</center>";
-     	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
-     	echo "<center><h4>".$title."</h4></center>";
- 	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
-   		$html2 = get_html_content($url2);
-   		$html2 = str_get_html($html2);
-   		$count = 0;
-   		foreach($html2->find('div[class=olpOffer]') as $element) {
-   			if ($count < 10) {
-   				$count2 = 0;
-          $arr = [];
-   				foreach($element->find('div[class=a-column]') as $each) {
-   					if ($count2 < 4) {
-   						if ($count2 == 1) {
-   							$comp = "";
-   							foreach($each->find('h3[class=olpCondition]') as $texts) {
-	   							$comp .= $texts;
-	   						}
-   							$each = preg_replace('|<span.*/span>|iU', '' , $comp);
+   	}
+   	echo "<center><h2><b>Product</b></h2></center>";
+   	echo "<center>".$image."</center>";
+   	$title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
+   	echo "<center><h4>".$title."</h4></center>";
+	    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
+ 		$html2 = get_html_content($url2);
+ 		$html2 = str_get_html($html2);
+ 		$count = 0;
+ 		foreach($html2->find('div[class=olpOffer]') as $element) {
+ 			if ($count < 10) {
+ 				$count2 = 0;
+        $arr = [];
+ 				foreach($element->find('div[class=a-column]') as $each) {
+ 					if ($count2 < 4) {
+ 						if ($count2 == 1) {
+ 							$comp = "";
+ 							foreach($each->find('h3[class=olpCondition]') as $texts) {
+   							$comp .= $texts;
    						}
-              array_push($arr, $each);
-   						$count2 += 1;
-   					}
-   				}
-          $tid = hash('ripemd160', $arr[0]).rand(2, 100);
-          $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
-          $insert = str_replace('?', '', $insert);
-          print $insert;
-          $db->exec($insert);
-   				$count += 1;
-   			}
-   		}
-      $db = new SQLite3('amazon.db');
-      $results = $db->query('SELECT * FROM amz');
-  //     $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-  //       <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
-  //     while ($row = $results->fetchArray()) {
-  //       $tbl .= $row;
-  //     }
-      // while ($row = $results->fetchArray()) {
-      //   var_dump($row);
-      // }
-  //  		$tbl .= "</tbody></table>";
-  //  		$tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
-  //  		$tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
-  //  		$tbl = preg_replace('|Read\smore|iU', '' , $tbl);
-		// echo $tbl;
+ 							$each = $comp;
+ 						}
+            $each = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $each);
+            $each = preg_replace('|<form.*/form>|iU', '' , $each);
+            $each = preg_replace('|Read\smore|iU', '' , $each);
+            $each = preg_replace('|<span.*/span>|iU', '' , $each);
+            array_push($arr, $each);
+ 						$count2 += 1;
+ 					}
+ 				}
+        $tid = "c".hash('sha256', $arr[0]).rand(2, 100);
+        $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
+        print $arr[3];
+        //$insert = str_replace('?', '', $insert);
+        //$insert = str_replace('shippingMessage_ftinfo_olp_.', '', $insert);
+        //print $insert;
+        $db->exec($insert);
+ 				$count += 1;
+ 			}
+ 		}
+    $results = $db->query('SELECT * FROM amz');
+    $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
+      <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
+    while ($row = $results->fetchArray()) {
+      $tbl .= "<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
+    }
+ 		$tbl .= "</tbody></table>";
+		echo $tbl;
 	}
 	?> 
 	<script>
