@@ -77,19 +77,14 @@ td {
  							foreach($each->find('h3[class=olpCondition]') as $texts) {
    							$comp .= $texts;
    						}
- 							$each = $comp;
+              $each = preg_replace('|<span.*/span>|iU', '' , $comp);
  						}
-            $each = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $each);
-            $each = preg_replace('|<form.*/form>|iU', '' , $each);
-            $each = preg_replace('|Read\smore|iU', '' , $each);
-            $each = preg_replace('|<span.*/span>|iU', '' , $each);
             array_push($arr, $each);
  						$count2 += 1;
  					}
  				}
-        $tid = "c".hash('sha256', $arr[0]).rand(2, 100);
+        $tid = "c".hash('sha256', $arr[0]).rand(2, 100).rand(101, 1000);
         $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
-        print $arr[3];
         //$insert = str_replace('?', '', $insert);
         //$insert = str_replace('shippingMessage_ftinfo_olp_.', '', $insert);
         //print $insert;
@@ -104,6 +99,9 @@ td {
       $tbl .= "<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
     }
  		$tbl .= "</tbody></table>";
+    $tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
+    $tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
+    $tbl = preg_replace('|Read\smore|iU', '' , $tbl);
 		echo $tbl;
 	}
 	?> 
