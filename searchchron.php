@@ -2,26 +2,9 @@
 <html>
 <head>
 <title>Amazon Search</title>
-<style>
-
-td {
-  width: 25%;
-}
-
-</style>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script> 
-
 </head>
 
 <body>
-
-  <form id="theform" name="f" method="POST" action="searchchron.php">
-  <font color="orange"><b>Search Amazon:</b></font>
-  <input type="text" id="myTextId" name="search">
-    <button type="submit" accesskey="s"><u>S</u>earch</button>
-  </form>
 
   <?php
   include('simple_html_dom.php');
@@ -54,11 +37,8 @@ td {
         $id = explode("/", $id[1]);
         $id = $id[0];
     }
-    echo "<center><h2><b>Product</b></h2></center>";
-    echo "<center>".$image."</center>";
     $title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
-    echo "<center><h4>".$title."</h4></center>";
-      $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
+    $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
     $html2 = get_html_content($url2);
     $html2 = str_get_html($html2);
     $count = 0;
@@ -85,30 +65,8 @@ td {
         $count += 1;
       }
     }
-    $results = $db->query('SELECT * FROM amz');
-    $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-      <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
-    while ($row = $results->fetchArray()) {
-      $tbl .= "<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
-    }
-    $tbl .= "</tbody></table>";
-    $tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
-    $tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
-    $tbl = preg_replace('|Read\smore|iU', '' , $tbl);
-    echo $tbl;
   }
   ?> 
-  <script>
-    function calla() {
-      var form = document.getElementById("theform");
-      form.submit();
-    }
-    function sortT() {
-      $("#myTable").tablesorter(); 
-    }
-    calla();
-    sortT();
-  </script>
 
 </body>
 
