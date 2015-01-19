@@ -31,13 +31,10 @@
     $html = file_get_html($url);
     foreach($html->find('li[id=result_0]') as $element) {
         $prod_url = $element->find('a', 0)-> href;
-        $image = $element->find('img', 0);
-        $title = $element->find('a', 1);
         $id = explode("dp/", $prod_url);
         $id = explode("/", $id[1]);
         $id = $id[0];
     }
-    $title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
     $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
     $html2 = get_html_content($url2);
     $html2 = str_get_html($html2);
