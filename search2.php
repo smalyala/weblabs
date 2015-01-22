@@ -49,7 +49,7 @@ td {
   $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
   <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
   while ($row = $results->fetchArray()) {
-    $tbl .= "<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
+    $tbl .= "<tr><td><center>".$row[1]."</center></td><td><center>".$row[2]."</center></td><td><center>".$row[3]."</center></td><td><center>".$row[4]."</center></td></tr>";
   }
   $tbl .= "</tbody></table>";
   $tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
