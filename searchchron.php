@@ -33,6 +33,7 @@
       $id = explode("/", $id[1]);
       $id = $id[0];
   }
+  $date = date("m/d/y");
   $url2 = "http://www.amazon.com/gp/offer-listing/".$id;
   $html2 = get_html_content($url2);
   $html2 = str_get_html($html2);
@@ -55,7 +56,7 @@
         }
       }
       $tid = "c".hash('sha256', $arr[0]).rand(2, 100).rand(101, 1000);
-      $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
+      $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$date."hi".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
       $db->exec($insert);
       $count += 1;
     }

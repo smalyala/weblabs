@@ -46,16 +46,25 @@ td {
   $title = preg_replace('|<a.*><h2.*>(.*)</h2></a>|iU', '\1' , $title);
   echo "<center><h4>".$title."</h4></center>";
   $results = $db->query('SELECT * FROM amz');
-  $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
+  $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Date</center></h2></b></th><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
   <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
   while ($row = $results->fetchArray()) {
-    $tbl .= "<tr><td><center>".$row[1]."</center></td><td><center>".$row[2]."</center></td><td><center>".$row[3]."</center></td><td><center>".$row[4]."</center></td></tr>";
+    $dat = $row[1]."";
+    if (strpos($dat, "hi") == 1) {
+      $date = preg_replace('|^(.)*hi|', '\1', $dat);
+      $price = preg_replace('|hi(.)*$|', '\1', $dat);
+      $tbl .= "<tr><td><center>".$date."</center></td><td><center>".$price."</center></td><td><center>".$row[2]."</center></td><td><center>".$row[3]."</center></td><td><center>".$row[4]."</center></td></tr>";
+    }
+    else {
+      $tbl .= "<tr><td><center>N/A</center></td><td><center>".$row[1]."</center></td><td><center>".$row[2]."</center></td><td><center>".$row[3]."</center></td><td><center>".$row[4]."</center></td></tr>";
+    }
   }
   $tbl .= "</tbody></table>";
   $tbl = preg_replace('|<a.*>(.*)</a>|iU', '\1' , $tbl);
   $tbl = preg_replace('|<form.*/form>|iU', '' , $tbl);
   $tbl = preg_replace('|Read\smore|iU', '' , $tbl);
   echo $tbl;
+
   ?> 
 
   <script>
