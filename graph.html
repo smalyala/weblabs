@@ -14,7 +14,8 @@
 
 	<body>
 		<button onclick='chPath()'>New Path</button>
-		<button onclick='init()'>Toggle edges</button>
+		<button onclick='sav()'>Save</button>
+		<button onclick='res()'>Restore</button>
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 
 	<script>
@@ -67,40 +68,18 @@
 			}, true);
 	    }
 
-		function init() {
-			canvas.addEventListener('mousedown', mouseDown, false);
-			canvas.addEventListener('mouseup', mouseUp, false);
-			canvas.addEventListener('mousemove', mouseMove, false);
-		}
-
-		function mouseDown(e) {
-			rect.startX = e.pageX - this.offsetLeft;
-			rect.startY = e.pageY - this.offsetTop;
-			drag = true;
-		}
-
-		function mouseUp() {
-			drag = false;
-			canvas.width = canvas.width;
-
-		}
-
-		function mouseMove(e) {
-			if (drag) {
-				rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-				rect.h = (e.pageY - this.offsetTop) - rect.startY ;
-				//ctx.clearRect(0,0,canvas.width,canvas.height);
-				canvas.width = canvas.width;
-				drawRec();
-			}
-		}
-
-		function drawRec() {
-			ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
-		}
-
 		function chPath() {
 			skip = true;
+		}
+
+		function sav() {
+			ctx.save();
+			console.log("saved")
+		}
+
+		function res() {
+			ctx.restore();
+			console.log('up')
 		}
 
 	</script>
