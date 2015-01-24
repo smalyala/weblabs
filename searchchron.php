@@ -55,11 +55,10 @@
           $count2 += 1;
         }
       }
-      $tid = $date."hic".hash('sha256', $arr[0]).rand(2, 100).rand(101, 1000);
+      $tid = $date."hihihic".hash('sha256', $arr[0]).rand(2, 100).rand(101, 1000);
       $insert = "INSERT INTO amz (id, price, condition, seller, logistics) VALUES ('".$tid."','".$arr[0]."','".$arr[1]."','".$arr[2]."','".$arr[3]."')";
       $db->exec($insert);
       $count += 1;
-      echo $tid;
     }
   }
   ?> 
