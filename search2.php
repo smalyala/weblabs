@@ -5,7 +5,7 @@
 <style>
 
 td {
-  width: 25%;
+  width: 15%;
 }
 
 </style>
@@ -50,6 +50,7 @@ td {
   <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
   while ($row = $results->fetchArray()) {
     $dat = $row[1]."";
+    echo $dat."<br>";
     if (strpos($dat, "hi") == 1) {
       $date = preg_replace('|^(.)*hi|', '\1', $dat);
       $price = preg_replace('|hi(.)*$|', '\1', $dat);
