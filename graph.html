@@ -16,16 +16,32 @@
 		<br>
 		<h3><b><center>Toggling CS Graph- Sahith Malyala</center></b></h3>
 		Toggle Edges- Inverts the set of edges between the vertices captured in the region.
+		BFS- Find the shortest path between the first point and last point created.
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 		<br>
 		<br>
 		<button onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
 		<button onclick='res()' accesskey="e">R<u>e</u>set</button>
 		<button onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
+		<button onclick='BFS()' accesskey="b"><u>B</u>FS</button>
 		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
 		<input type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
 
 	<script>
+
+		function BFS() {
+			var q = [];
+			var v = [];
+			var first = pts[1];
+			var last = pts[pts.length-1];
+			v.push(first);
+			while (q.length != 0) {
+				var now = q.shift();
+				
+			}
+
+
+		}
 		function readText(filePath) {
 	    	var reader = new FileReader();
 	        var output = ""; 
