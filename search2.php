@@ -47,7 +47,7 @@ td {
   echo "<center><h4>".$title."</h4></center>";
   $results = $db->query('SELECT * FROM amz');
   $tbl = "<table border='1' id='myTable' class='tablesorter'><thead><tr><th><b><h2><center>Date</center></h2></b></th><th><b><h2><center>Price</center></h2></b></th><th><b><h2><center>Condition</center></h2></b></th>
-  <td><b><h2><center>Seller</center></h2></b></td><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
+  <th><b><h2><center>Seller</center></h2></b></th><td><b><h2><center>Logistics</center></h2></b></td></tr></thead><tbody>";
   while ($row = $results->fetchArray()) {
     $dat = $row[0]."";
     $date = preg_replace('|^(.*)hihihi.*$|', '\1', $dat);
