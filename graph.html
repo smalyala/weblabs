@@ -6,19 +6,25 @@
 	<style>
 		#myCanvas {
 			margin-left: 30%;
-			margin-top: 10%;
+			margin-top: 2%;
 		}
 	</style>
 
 	</head>
 
-	<body>
+	<body bgcolor="#A3ECFF">
+		<br>
+		<h3><b><center>Toggling CS Graph</center></b></h3>
+		Toggle Edges- Inverts the set of edges between the vertices captured in the region.
+		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
+		<br>
+		<br>
 		<button onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
 		<button onclick='res()' accesskey="e">R<u>e</u>set</button>
 		<button onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
 		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
 		<input type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
-		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
+
 	<script>
 		function readText(filePath) {
 	    	var reader = new FileReader();
@@ -239,8 +245,8 @@
 						ctx.moveTo(x, y);
 						ctx.lineTo(xi, yi);
 						ctx.lineWidth = 4;
-						ctx.strokeStyle = "#ffffff";
-						ctx.fillStyle = "white";
+						ctx.strokeStyle = "#A3ECFF";
+						ctx.fillStyle = "#A3ECFF";
 						ctx.fill();
 				    	ctx.stroke();
 				    	
