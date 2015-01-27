@@ -15,16 +15,44 @@
 	<body>
 		<button onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
 		<button onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
-		<button onclick='res()' accesskey="r"><u>R</u>eset</button>
+		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
+		<button onclick='res()' accesskey="e">R<u>e</u>set</button>
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
-
 	<script>
+		function upload() {
+			var file = fopen("points.txt", 0);
+			if (file != -1) {
+				len = flength(file);
+				str = fread(file, len);
+				fclose(file);
+				
+				var i = 0;
+				while (i < str.length()) {
+
+				}
+			}
+		}
+
+		function save() {
+			var file = fopen("points.txt", 3);
+			if (file != -1) {
+				var str = "";
+				pts.forEach(function(entry) {
+					str += entry + ";";
+				})
+				str += ":";
+				points.forEach(function(entry) {
+					str += entry + ";";
+				})
+				fwrite(file, str);
+				fclose(file);
+			}
+		}
+
 		pts = [[0, 0]];
 		skip = false;
 		points = [];
 		function putBack() {
-			
-			
 			points.forEach(function(entry) {
 				x = entry[0];
 				y = entry[1];
@@ -248,7 +276,7 @@
 			points = [];
 			chPath();
 		}
-		
+		upload();
 		chPath();
 
 	</script>
