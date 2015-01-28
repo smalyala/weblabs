@@ -16,31 +16,108 @@
 		<br>
 		<h3><b><center>Toggling CS Graph- Sahith Malyala</center></b></h3>
 		Toggle Edges- Inverts the set of edges between the vertices captured in the region.
-		BFS- Find the shortest path between the first point and last point created.
+		<br>
+		Algorithm- Find the shortest path between the highest and lowest points.
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 		<br>
 		<br>
 		<button onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
 		<button onclick='res()' accesskey="e">R<u>e</u>set</button>
 		<button onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
-		<button onclick='BFS()' accesskey="b"><u>B</u>FS</button>
+		<button onclick='Dijk()' accesskey="a"><u>A</u>lgorithm</button>
 		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
 		<input type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
 
 	<script>
 
-		function BFS() {
+		function Dijk() {
 			var q = [];
-			var v = [];
-			var first = pts[1];
-			var last = pts[pts.length-1];
-			v.push(first);
+			var first = 700;
+			var last = 0;
+			pts.forEach(function(entry) {
+				if (entry[0] != 0 && entry[1] != 0) {
+					if (first == 700) {
+						first = entry;
+						last = entry;
+					}
+					if (entry[1] > last[1]) {
+						last = entry;
+					}
+					if (entry[1] < first[1]) {
+						first = entry;
+					}
+				}
+			})
+			var dist = {};
+			var prev = {};
+			dist[first] = 0;
+			prev[first] = null;
+			pts.forEach(function(entry) {
+				if (entry[0] != 0 && entry[1] != 0) {
+					if (entry[0] != first[0] && entry[1] != first[1]) {
+						dist[entry] = 10000;
+						prev[entry] = null;
+					}
+					q.push(entry);
+				}
+			})
 			while (q.length != 0) {
 				var now = q.shift();
-				
+				var nbrs = findNbrs(now);
+				nbrs.forEach(function(entry) {
+					distance = dist[now] + 1;
+					if (distance < dist[entry]) {
+						dist[entry] = distance;
+						prev[entry] = now;
+					}
+				})
 			}
+			var hit = [];
+			while (prev[last] != null) {
+				hit.push(last);
+				last = prev[last];
+			}
+			if (hit.length == 0) {
+				alert("No paths between points")
+			}
+			else {
+				hit.push(first);
+				showD(hit)
+			}
+		}
 
+		function showD(hit) {
+			for (var i = 1; i < hit.length; i++) {
+				curr = hit[i];
+				prev = hit[i-1];
+				px = prev[0];
+				py = prev[1];
+				x = curr[0];
+				y = curr[1];
+				ctx.beginPath();
+				ctx.moveTo(px, py);
+				ctx.lineTo(x, y);
+				ctx.lineWidth = 3;
+		    	ctx.strokeStyle = 'red'
+		    	ctx.stroke();
+			}
+		}
 
+		function findNbrs(poss) {
+			nbrs = [];
+			points.forEach(function(entry) {
+				if (entry[0] == poss[0] && entry[1] == poss[1]) {
+					if (entry[2] != poss[0] && entry[3] != poss[1]) {
+						nbrs.push([entry[2], entry[3]])
+					}
+				}
+				else if (entry[2] == poss[0] && entry[3] == poss[1]) {
+					if (entry[0] != poss[0] && entry[1] != poss[1]) {
+						nbrs.push([entry[0], entry[1]])
+					}
+				}
+			})
+			return nbrs;
 		}
 		function readText(filePath) {
 	    	var reader = new FileReader();
@@ -167,9 +244,9 @@
 		    		skip = false;
 	    			ctx.beginPath();
 			    	ctx.arc(x,y,7,0,2*Math.PI);
-		    		
 			    	ctx.fillStyle = 'black';
 			    	ctx.fill();
+			    	ctx.strokeStyle = 'black';
 			    	ctx.stroke();
 		    	}
 	    	}
