@@ -24,18 +24,15 @@
 		<div style='-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;'  unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 		<br>
 		<h3><b><center>Toggling CS Graph- Sahith Malyala</center></b></h3>
-		Toggle Edges- Inverts the set of edges between the vertices captured in the region.
-		<br>
-		Algorithm- Find the shortest path between the highest and lowest points.
 		<canvas id="myCanvas" width="800" height="700" style="border:1px solid #000000;"></canvas>
 		<br>
 		<br>
-		<button onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
-		<button onclick='res()' accesskey="e">R<u>e</u>set</button>
-		<button onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
-		<button onclick='Dijk()' accesskey="a"><u>A</u>lgorithm</button>
-		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
-		<input type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
+		<button title="Creates separate path on canvas" onclick='chPath()' accesskey="n"><u>N</u>ew Path</button>
+		<button title="Clears the canvas" onclick='res()' accesskey="e">R<u>e</u>set</button>
+		<button title="Inverts the set of edges between the vertices captured in the region" onclick='flip()' accesskey="t"><u>T</u>oggle Edges</button>
+		<button title="Finds the shortest path between the highest and lowest points" onclick='Dijk()' accesskey="a"><u>A</u>lgorithm</button>
+		<button title="Downloads a file that can be used to resume work on canvas" onclick='save()' accesskey="t"><u>S</u>ave</button>
+		<input title="Upload file to resume work on canvas" type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
 		<div>
 	<script>
 
