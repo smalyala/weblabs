@@ -8,11 +8,20 @@
 			margin-left: 30%;
 			margin-top: 2%;
 		}
+		div.noselect {
+		    -webkit-touch-callout: none;
+		    -webkit-user-select: none;
+		    -khtml-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		}
 	</style>
 
 	</head>
 
 	<body bgcolor="#A3ECFF">
+		<div style='-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;'  unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 		<br>
 		<h3><b><center>Toggling CS Graph- Sahith Malyala</center></b></h3>
 		Toggle Edges- Inverts the set of edges between the vertices captured in the region.
@@ -27,7 +36,7 @@
 		<button onclick='Dijk()' accesskey="a"><u>A</u>lgorithm</button>
 		<button onclick='save()' accesskey="t"><u>S</u>ave</button>
 		<input type=file id='uploadfile' name='uploadfile' onchange="readText(this)">
-
+		<div>
 	<script>
 
 		function Dijk() {
