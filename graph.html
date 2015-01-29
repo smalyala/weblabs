@@ -20,7 +20,7 @@
 
 	</head>
 
-	<body bgcolor="#A3ECFF">
+	<body bgcolor="white">
 		<div style='-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;'  unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 		<br>
 		<h3><b><center>Toggling CS Graph- Sahith Malyala</center></b></h3>
@@ -37,6 +37,9 @@
 	<script>
 
 		function Dijk() {
+			console.log("pts", pts);
+			console.log("points", points)
+			console.log("")
 			var q = [];
 			var first = 700;
 			var last = 0;
@@ -58,18 +61,22 @@
 			var prev = {};
 			dist[first] = 0;
 			prev[first] = null;
-			pts.forEach(function(entry) {
-				if (entry[0] != 0 && entry[1] != 0) {
-					if (entry[0] != first[0] && entry[1] != first[1]) {
-						dist[entry] = 10000;
-						prev[entry] = null;
+			for (var i = 0; i < 10; i++) {
+				pts.forEach(function(entry) {
+					if (entry[0] != 0 && entry[1] != 0) {
+						if (entry[0] != first[0] && entry[1] != first[1]) {
+							dist[entry] = 10000;
+							prev[entry] = null;
+						}
+						q.push(entry);
 					}
-					q.push(entry);
-				}
-			})
+				})
+				pts.reverse();
+			}
 			while (q.length != 0) {
 				var now = q.shift();
 				var nbrs = findNbrs(now);
+				console.log(nbrs)
 				nbrs.forEach(function(entry) {
 					distance = dist[now] + 1;
 					if (distance < dist[entry]) {
@@ -78,6 +85,7 @@
 					}
 				})
 			}
+			pts.reverse();
 			var hit = [];
 			while (prev[last] != null) {
 				hit.push(last);
@@ -90,6 +98,7 @@
 				hit.push(first);
 				showD(hit)
 			}
+			skip = true;
 		}
 
 		function showD(hit) {
@@ -112,14 +121,14 @@
 		function findNbrs(poss) {
 			nbrs = [];
 			points.forEach(function(entry) {
-				if (entry[0] == poss[0] && entry[1] == poss[1]) {
-					if (entry[2] != poss[0] && entry[3] != poss[1]) {
-						nbrs.push([entry[2], entry[3]])
-					}
-				}
-				else if (entry[2] == poss[0] && entry[3] == poss[1]) {
+				if (entry[2] == poss[0] && entry[3] == poss[1]) {
 					if (entry[0] != poss[0] && entry[1] != poss[1]) {
 						nbrs.push([entry[0], entry[1]])
+					}
+				}
+				else if (entry[0] == poss[0] && entry[1] == poss[1]) {
+					if (entry[2] != poss[0] && entry[3] != poss[1]) {
+						nbrs.push([entry[2], entry[3]])
 					}
 				}
 			})
@@ -344,8 +353,8 @@
 						ctx.moveTo(x, y);
 						ctx.lineTo(xi, yi);
 						ctx.lineWidth = 4;
-						ctx.strokeStyle = "#A3ECFF";
-						ctx.fillStyle = "#A3ECFF";
+						ctx.strokeStyle = "white";
+						ctx.fillStyle = "white";
 						ctx.fill();
 				    	ctx.stroke();
 				    	
